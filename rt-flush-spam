@@ -1,0 +1,20 @@
+#!/bin/bash
+
+SPAM=$(rt ls -t tickets -q Spam -i Status=New)
+# testing SPAM=$(rt ls -t tickets -q Spam -i "Created > '2019-04-01'")
+
+if [[ -z "$SPAM" ]]
+then
+    echo "No spam found"
+    exit
+fi
+
+echo "Ticket ID(s):" $(sed s:ticket/::g <<< $SPAM)
+COUNT=$(wc -l <<< "$SPAM" | tr -d ' ')
+read -p "Reject $COUNT ticket(s)? (y/N) " -n 1 -r
+echo
+
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    rt edit $SPAM set Status=Rejected
+fi

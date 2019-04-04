@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+if [ "$#" -lt 1 ]; then
+        echo No tickets specified
+        exit
+fi
+
+for ticket in "$@"
+do
+        rt edit $ticket set status=Rejected queue=Spam
+done
