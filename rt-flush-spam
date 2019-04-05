@@ -9,6 +9,9 @@ then
     exit
 fi
 
+rt show -f Subject $SPAM
+echo
+
 echo "Ticket ID(s):" $(sed s:ticket/::g <<< $SPAM)
 COUNT=$(wc -l <<< "$SPAM" | tr -d ' ')
 read -p "Reject $COUNT ticket(s)? (y/N) " -n 1 -r
